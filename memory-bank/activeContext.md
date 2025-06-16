@@ -7,7 +7,7 @@
 
 ## Immediate Next Steps (Today)
 1. ✅ Initialize memory bank structure
-2. 🔄 Create Git repository `nt8-ml-mvp`
+2. ✅ Create Git repository `nt8-ml-mvp`
 3. 🔄 Export 2 years of ES 1-minute data from NinjaTrader
 4. 🔄 Set up Optuna hyperparameter optimization skeleton
 5. 🔄 Schedule daily 30-minute stand-ups

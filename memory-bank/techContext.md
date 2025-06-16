@@ -3,7 +3,7 @@
 ## Technology Stack
 
 ### Core Technologies
-**Platform**: Windows 10 (NinjaTrader 8 requirement)
+**Platform**: Windows 11 (NinjaTrader 8 requirement)
 **Languages**: 
 - Python 3.9+ (ML pipeline, signal bridge)
 - C# (NinjaScript strategy development)
@@ -26,7 +26,7 @@
 - **NinjaTrader 8**: Version 8.1.x (pinned for API stability)
 - **Python**: 3.9+ with conda/pip environment management
 - **Git**: Version control and CI/CD integration
-- **IDE**: Visual Studio (NinjaScript) + VS Code/PyCharm (Python)
+- **IDE**: Cursor
 
 #### Python Dependencies
 ```python

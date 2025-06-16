@@ -1,7 +1,7 @@
 # Progress: NinjaTrader 8 ML Strategy Deployer
 
 ## Current Status: Project Initialization
-**Overall Progress**: 5% (Memory bank established, plan finalized)
+**Overall Progress**: 8% (Memory bank established, Git repository created, plan finalized)
 **Week**: Preparation (Week 0)
 **Next Milestone**: Week 1 - Data & Model Design
 
@@ -20,10 +20,13 @@
 - ✅ Communication protocols designed (WebSocket/TCP bridge)
 - ✅ Data pipeline approach planned (parquet storage, feature engineering)
 
+### Development Setup
+- ✅ Git repository `nt8-ml-mvp` created and initialized
+
 ## What's Left to Build 🔄
 
-### Week 1: Data & Model Design (0% complete)
-- [ ] Git repository creation and setup
+### Week 1: Data & Model Design (5% complete)
+- [x] Git repository creation and setup
 - [ ] Data pipeline implementation
   - [ ] Export 2-5 years of ES 1-minute data via NT Market Replay API
   - [ ] Store data in `/data/es_1m/` using parquet/feather format
