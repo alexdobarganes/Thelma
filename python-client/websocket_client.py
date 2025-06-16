@@ -258,11 +258,11 @@ class WebSocketClient:
     """Advanced WebSocket client for NinjaTrader integration"""
     
     def __init__(self, 
-                 host: str = "localhost", 
+                 host: str = "192.168.1.65", 
                  port: int = 6789,
                  auto_reconnect: bool = True,
                  max_reconnect_attempts: int = 5,
-                 csv_file: str = "ultra_fast_market_data.csv",
+                 csv_file: str = "data/market_data.csv",
                  buffer_size: int = 1000,
                  max_queue_size: int = 10000,
                  high_performance_mode: bool = True):
@@ -695,11 +695,11 @@ async def main():
     
     # Create client with ultra-high-performance configuration
     client = WebSocketClient(
-        host="localhost",
+        host="192.168.1.65",
         port=6789,
         auto_reconnect=True,
         max_reconnect_attempts=5,
-        csv_file="ultra_fast_market_data.csv",
+        csv_file="data/market_data.csv",
         buffer_size=2000,           # Larger buffer for high-volume data
         max_queue_size=20000,       # Larger queue to handle 1M+ historical bars
         high_performance_mode=True  # Enable ultra-fast mode for historical data

@@ -66,16 +66,17 @@
 
 ## What's Left to Build 🔄
 
-### Week 1: Data & Model Design (70% complete ⬆️)
+### Week 1: Data & Model Design (80% complete ⬆️)
 - [x] Git repository creation and setup
 - [x] **WebSocket bridge implementation** (COMPLETED - moved from Week 3)
 - [x] **Intelligent historical data management** (COMPLETED - auto-calculation system)
 - [x] **Historical data export validation** (COMPLETED - 1.05M+ bars successfully processed)
 - [x] **Ultra-performance client architecture** (COMPLETED - unlimited data capacity)
 - [x] **CSV data format standardization** (COMPLETED - OHLCV format)
+- [x] **Complete historical dataset validation** (COMPLETED - 2 years ES 1-minute data confirmed)
 - [ ] Data pipeline implementation
-  - [ ] Export 2-5 years of ES 1-minute data via NT Market Replay API
-  - [ ] Store data in `/data/es_1m/` using CSV format (infrastructure ready)
+  - [x] **Export 2+ years of ES 1-minute data** - ✅ COMPLETED (595,426 records: May 2023 → May 2025)
+  - [x] **Store data in `/data/es_1m/`** - ✅ COMPLETED (`market_data.csv` standard OHLCV format)
   - [ ] Add derived columns (returns, ATR, EMA9, EMA21, VWAP, time-of-day, session flags)
 - [ ] Feature engineering pipeline
   - [ ] Windowed OHLCV + indicators with Z-score normalization
@@ -143,7 +144,7 @@
 ## Known Issues & Blockers
 
 ### Current Blockers
-- None - Ultra-high-performance infrastructure complete and validated with 1M+ historical bars
+- None - Complete 2-year historical dataset validated and ready for ML pipeline development
 
 ### Previous Issues (Resolved ✅)
 - ~~**WebSocket disconnections during large data loads**~~: ✅ **COMPLETELY RESOLVED** - Ultra-performance architecture implemented
@@ -222,6 +223,8 @@
 1. ✅ Create Git repository `nt8-ml-mvp`
 2. ✅ **COMPLETED**: Ultra-high performance WebSocket bridge implementation
 3. ✅ **COMPLETED**: Connection stability and unlimited data capacity validation
-4. Begin ES futures data extraction process with validated infrastructure
-5. Initialize Optuna hyperparameter optimization framework
-6. Schedule daily stand-up meetings 
+4. ✅ **COMPLETED**: ES futures data validation - 2 years of 1-minute data confirmed
+5. Build feature engineering pipeline (returns, ATR, EMA9, EMA21, VWAP, time-of-day, session flags)
+6. Initialize Optuna hyperparameter optimization framework
+7. Implement TCN vs LightGBM model comparison on validated dataset
+8. Schedule daily stand-up meetings 

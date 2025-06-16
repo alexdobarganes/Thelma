@@ -471,10 +471,10 @@ namespace NinjaTrader.NinjaScript.Indicators
                 isRunning = true;
                 
                 httpListener = new HttpListener();
-                httpListener.Prefixes.Add("http://localhost:" + WebSocketPort + "/");
+                httpListener.Prefixes.Add("http://+:" + WebSocketPort + "/");
                 httpListener.Start();
                 
-                Print("TBOT Optimized WebSocket server started on ws://localhost:" + WebSocketPort);
+                Print("TBOT Optimized WebSocket server started on ws://*:" + WebSocketPort + " (accessible from external machines)");
                 Print("Performance: Max " + MaxConcurrentConnections + " connections, Queue size " + MessageQueueSize);
                 Print("Historical data: " + (SendHistoricalOnConnect ? "ENABLED" : "DISABLED") + " (" + currentHistoricalCount + " bars available, supports 2+ years)");
                 Print("Lookback configuration: " + HistoricalLookback + " " + HistoricalLookbackUnit + " → " + calculatedHistoricalBars + " bars calculated");
