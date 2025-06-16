@@ -38,9 +38,9 @@ namespace NinjaTrader.NinjaScript.Indicators
         private readonly byte[] pingBytes = Encoding.UTF8.GetBytes("ping");
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         
-        // Historical data management - optimized
+        // Historical data management - optimized for 2+ years
         private ConcurrentQueue<HistoricalBar> historicalData;
-        private int maxHistoricalBars = 5000; // Store up to 5000 bars
+        private int maxHistoricalBars = 1100000; // Store up to 1.1M bars (supports 2+ years of 1-minute data)
         private int calculatedHistoricalBars = 2000; // Calculated based on HistoricalLookback
         private int currentHistoricalCount = 0;
 
@@ -250,8 +250,9 @@ namespace NinjaTrader.NinjaScript.Indicators
                 SendHistoricalOnConnect = true;
                 HistoricalLookback = 30; // 30 days by default
                 HistoricalLookbackUnit = LookbackUnit.Days;
-                HistoricalBarsCount = 2000; // Fallback/maximum limit
+                HistoricalBarsCount = 100000; // Fallback/maximum limit - supports large datasets
                 FastHistoricalDelivery = true;
+                AutoConfigureChartData = true;
                 
                 // Performance settings
                 MaxConcurrentConnections = 10;
@@ -265,6 +266,12 @@ namespace NinjaTrader.NinjaScript.Indicators
                 connectedClients = new ConcurrentList<WebSocketClient>();
                 cancellationTokenSource = new CancellationTokenSource();
                 
+                // Configure NinjaTrader to load sufficient historical data
+                if (AutoConfigureChartData)
+                {
+                    ConfigureHistoricalDataLoading();
+                }
+                
                 // Load existing historical data
                 LoadExistingHistoricalData();
                 
@@ -273,6 +280,58 @@ namespace NinjaTrader.NinjaScript.Indicators
             else if (State == State.Terminated)
             {
                 StopOptimizedWebSocketServer();
+            }
+        }
+
+        private void ConfigureHistoricalDataLoading()
+        {
+            try
+            {
+                // Calculate required historical data parameters
+                int requiredBars = CalculateHistoricalBarsFromLookback();
+                int requiredDays = 30; // Default minimum
+                
+                // Calculate days needed based on timeframe and lookback
+                switch (HistoricalLookbackUnit)
+                {
+                    case LookbackUnit.Days:
+                        requiredDays = Math.Max(30, HistoricalLookback);
+                        break;
+                    case LookbackUnit.Weeks:
+                        requiredDays = Math.Max(30, HistoricalLookback * 7);
+                        break;
+                    case LookbackUnit.Months:
+                        requiredDays = Math.Max(30, HistoricalLookback * 30);
+                        break;
+                    case LookbackUnit.Years:
+                        requiredDays = Math.Max(30, HistoricalLookback * 365);
+                        break;
+                }
+                
+                Print($"🔧 Configuring historical data loading:");
+                Print($"   Required bars: {requiredBars}");
+                Print($"   Required days: {requiredDays}");
+                Print($"   Current chart bars available: {BarsArray[0].Count}");
+                
+                if (BarsArray[0].Count < requiredBars)
+                {
+                    Print($"⚠️  Insufficient historical data loaded in chart!");
+                    Print($"📝 MANUAL ACTION REQUIRED:");
+                    Print($"   1. Right-click on chart");
+                    Print($"   2. Select 'Data Series'");
+                    Print($"   3. Set 'Days to load': {requiredDays}");
+                    Print($"   4. OR set 'Bars to load': {requiredBars}");
+                    Print($"   5. Click OK and wait for chart to reload");
+                    Print($"   6. Restart the indicator after data loads");
+                }
+                else
+                {
+                    Print($"✅ Chart has sufficient historical data: {BarsArray[0].Count} bars");
+                }
+            }
+            catch (Exception ex)
+            {
+                Print("Error configuring historical data loading: " + ex.Message);
             }
         }
 
@@ -344,13 +403,27 @@ namespace NinjaTrader.NinjaScript.Indicators
                 // Calculate how many bars we need based on lookback period
                 calculatedHistoricalBars = CalculateHistoricalBarsFromLookback();
                 
-                // Load historical bars from the chart data efficiently
-                int barsToLoad = Math.Min(calculatedHistoricalBars, BarsArray[0].Count);
-                int startIndex = Math.Max(0, BarsArray[0].Count - barsToLoad);
+                int availableBars = BarsArray[0].Count;
                 
-                for (int i = startIndex; i < BarsArray[0].Count; i++)
+                // Check if we need to request more historical data
+                if (availableBars < calculatedHistoricalBars)
                 {
-                    if (i >= 0 && i < BarsArray[0].Count)
+                    Print($"📊 Chart has {availableBars} bars, but need {calculatedHistoricalBars} bars");
+                    Print($"💡 To get more historical data:");
+                    Print($"   1. Right-click chart → Data Series");
+                    Print($"   2. Set 'Days to load' to: {Math.Max(30, HistoricalLookback * (HistoricalLookbackUnit == LookbackUnit.Days ? 1 : HistoricalLookbackUnit == LookbackUnit.Weeks ? 7 : HistoricalLookbackUnit == LookbackUnit.Months ? 30 : 365))}");
+                    Print($"   3. Or set 'Bars to load' to: {calculatedHistoricalBars}");
+                    Print($"   4. Click OK and reload the chart");
+                    Print($"📈 Using available {availableBars} bars for now...");
+                }
+                
+                // Load all available historical bars from the chart data efficiently
+                int barsToLoad = Math.Min(calculatedHistoricalBars, availableBars);
+                int startIndex = Math.Max(0, availableBars - barsToLoad);
+                
+                for (int i = startIndex; i < availableBars; i++)
+                {
+                    if (i >= 0 && i < availableBars)
                     {
                         var bar = new HistoricalBar
                         {
@@ -366,7 +439,7 @@ namespace NinjaTrader.NinjaScript.Indicators
                         historicalData.Enqueue(bar);
                         currentHistoricalCount++;
                         
-                        // Maintain max size
+                        // Maintain max size efficiently for large datasets
                         if (currentHistoricalCount > maxHistoricalBars)
                         {
                             if (historicalData.TryDequeue(out _))
@@ -375,7 +448,15 @@ namespace NinjaTrader.NinjaScript.Indicators
                     }
                 }
                 
-                Print("Loaded " + currentHistoricalCount + " historical bars for optimized streaming");
+                if (currentHistoricalCount < calculatedHistoricalBars)
+                {
+                    Print($"⚠️  Loaded {currentHistoricalCount} of {calculatedHistoricalBars} requested bars");
+                    Print($"📋 To get full dataset, increase chart's historical data loading");
+                }
+                else
+                {
+                    Print($"✅ Loaded {currentHistoricalCount} historical bars for optimized streaming (supports up to 2+ years)");
+                }
             }
             catch (Exception ex)
             {
@@ -395,7 +476,7 @@ namespace NinjaTrader.NinjaScript.Indicators
                 
                 Print("TBOT Optimized WebSocket server started on ws://localhost:" + WebSocketPort);
                 Print("Performance: Max " + MaxConcurrentConnections + " connections, Queue size " + MessageQueueSize);
-                Print("Historical data: " + (SendHistoricalOnConnect ? "ENABLED" : "DISABLED") + " (" + currentHistoricalCount + " bars available)");
+                Print("Historical data: " + (SendHistoricalOnConnect ? "ENABLED" : "DISABLED") + " (" + currentHistoricalCount + " bars available, supports 2+ years)");
                 Print("Lookback configuration: " + HistoricalLookback + " " + HistoricalLookbackUnit + " → " + calculatedHistoricalBars + " bars calculated");
                 
                 // Start optimized cleanup timer (every 5 seconds)
@@ -814,7 +895,7 @@ namespace NinjaTrader.NinjaScript.Indicators
                 historicalData.Enqueue(newBar);
                 currentHistoricalCount++;
                 
-                // Maintain max size efficiently
+                // Maintain max size efficiently for large datasets (up to 2+ years)
                 if (currentHistoricalCount > maxHistoricalBars)
                 {
                     if (historicalData.TryDequeue(out _))
@@ -859,28 +940,32 @@ namespace NinjaTrader.NinjaScript.Indicators
         public LookbackUnit HistoricalLookbackUnit { get; set; }
 
         [NinjaScriptProperty]
-        [Range(100, 50000)]
-        [Display(Name = "Historical Bars Count (Max Limit)", Description = "Maximum number of historical bars (fallback/limit)", Order = 7, GroupName = "Historical Data")]
+        [Range(100, 1100000)]
+        [Display(Name = "Historical Bars Count (Max Limit)", Description = "Maximum number of historical bars (fallback/limit) - Supports up to 2+ years", Order = 7, GroupName = "Historical Data")]
         public int HistoricalBarsCount { get; set; }
 
         [NinjaScriptProperty]
         [Display(Name = "Fast Historical Delivery", Description = "Send historical data quickly (recommended for ML training)", Order = 8, GroupName = "Historical Data")]
         public bool FastHistoricalDelivery { get; set; }
 
+        [NinjaScriptProperty]
+        [Display(Name = "Auto-Configure Chart Data", Description = "Automatically provide guidance for loading sufficient historical data", Order = 9, GroupName = "Historical Data")]
+        public bool AutoConfigureChartData { get; set; }
+
         // Performance properties
         [NinjaScriptProperty]
         [Range(1, 50)]
-        [Display(Name = "Max Concurrent Connections", Description = "Maximum number of concurrent WebSocket connections", Order = 9, GroupName = "Performance")]
+        [Display(Name = "Max Concurrent Connections", Description = "Maximum number of concurrent WebSocket connections", Order = 10, GroupName = "Performance")]
         public int MaxConcurrentConnections { get; set; }
 
         [NinjaScriptProperty]
         [Range(100, 10000)]
-        [Display(Name = "Message Queue Size", Description = "Size of message queue per client", Order = 10, GroupName = "Performance")]
+        [Display(Name = "Message Queue Size", Description = "Size of message queue per client", Order = 11, GroupName = "Performance")]
         public int MessageQueueSize { get; set; }
 
         [NinjaScriptProperty]
         [Range(0, 1000)]
-        [Display(Name = "Tick Throttle Ms", Description = "Minimum milliseconds between tick broadcasts (0 = no throttling)", Order = 11, GroupName = "Performance")]
+        [Display(Name = "Tick Throttle Ms", Description = "Minimum milliseconds between tick broadcasts (0 = no throttling)", Order = 12, GroupName = "Performance")]
         public int TickThrottleMs { get; set; }
         #endregion
     }
