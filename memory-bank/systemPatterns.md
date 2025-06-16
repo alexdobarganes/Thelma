@@ -55,6 +55,15 @@
     "features": {...},
     "model_version": "v1.2.3"
 }
+
+# Historical Data Configuration (Automatic)
+{
+    "type": "historical_start",
+    "lookback_period": "30 Days",
+    "chart_timeframe": "1 Minute", 
+    "calculated_bars": 43200,
+    "total_available": 5000
+}
 ```
 
 #### NinjaScript Integration
@@ -80,6 +89,13 @@ for train_start in date_range:
 - Max daily loss limits
 - Cooldown after consecutive losses (3+ in a row)
 - Position size limits based on account equity
+
+### Adaptive Configuration Pattern
+- **Auto-Detection**: System detects chart timeframe automatically
+- **Intelligent Calculation**: Converts business terms (days/weeks) to technical parameters (bar counts)
+- **Safety Boundaries**: Enforces min/max limits with fallback for edge cases
+- **Transparent Operation**: Logs calculation process for user verification
+- **Timeframe Agnostic**: Single configuration works across all chart types
 
 ### Producer-Consumer Pattern
 - Data pipeline produces features continuously
@@ -164,3 +180,20 @@ Historical Data Pipeline
 - Local data storage (no cloud transmission of signals)
 - Encrypted model artifacts
 - Secure communication channels 
+
+### Adaptive Configuration Pattern
+```csharp
+// Intelligent Historical Data Calculation
+private int CalculateHistoricalBarsFromLookback()
+{
+    // Auto-detect chart timeframe and calculate optimal bars
+    var totalMinutes = CalculateMinutesFromLookback();
+    var barsNeeded = CalculateBarsFromTimeframe(totalMinutes);
+    return ApplySafetyLimits(barsNeeded);
+}
+
+// Example Results:
+// 30 days + 1-minute chart → 43,200 bars
+// 7 days + 5-minute chart → 2,016 bars  
+// 3 months + daily chart → ~90 bars
+``` 
