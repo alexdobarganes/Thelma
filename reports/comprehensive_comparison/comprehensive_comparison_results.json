@@ -1,0 +1,92 @@
+{
+  "timestamp": "2025-06-16T17:39:17.849185",
+  "dataset_info": {
+    "total_samples": 593977,
+    "num_features": 96,
+    "target_distribution": {
+      "0": 494463,
+      "1": 49785,
+      "2": 49729
+    }
+  },
+  "models": {
+    "lightgbm": {
+      "model_name": "lightgbm",
+      "model_type": "lightgbm",
+      "test_accuracy": 0.7130206404256035,
+      "test_f1_macro": 0.42493051231931833,
+      "test_f1_weighted": 0.6548631436022935,
+      "test_f1_flat": 0.8476156057672081,
+      "test_f1_long": 0.3217015832400448,
+      "test_f1_short": 0.10547434795070221,
+      "avg_latency_ms": 0.0014454211653745987,
+      "total_prediction_time": 0.17171025276184082,
+      "training_time": 9.166946172714233,
+      "val_f1_macro": 0.39470211058270394
+    },
+    "xgboost": {
+      "model_name": "xgboost",
+      "model_type": "xgboost",
+      "test_accuracy": 0.712784942253948,
+      "test_f1_macro": 0.40849370202285634,
+      "test_f1_weighted": 0.6476863325067799,
+      "test_f1_flat": 0.8482637277231463,
+      "test_f1_long": 0.3484403999281566,
+      "test_f1_short": 0.02877697841726619,
+      "avg_latency_ms": 0.002446857067570429,
+      "total_prediction_time": 0.2906768321990967,
+      "training_time": 15.415059804916382,
+      "val_f1_macro": 0.396309682415619
+    },
+    "catboost": {
+      "model_name": "catboost",
+      "model_type": "catboost",
+      "test_accuracy": 0.7104953028721506,
+      "test_f1_macro": 0.40085731061726526,
+      "test_f1_weighted": 0.6407946374333976,
+      "test_f1_flat": 0.8418303264085599,
+      "test_f1_long": 0.21431718944037176,
+      "test_f1_short": 0.14642441600286404,
+      "avg_latency_ms": 0.001129251027525489,
+      "total_prediction_time": 0.13415050506591797,
+      "training_time": 31.161272764205933,
+      "val_f1_macro": 0.3933394642840973
+    },
+    "extratrees": {
+      "model_name": "extratrees",
+      "model_type": "extratrees",
+      "test_accuracy": 0.7025320717869289,
+      "test_f1_macro": 0.3205850318444105,
+      "test_f1_weighted": 0.5968832787718081,
+      "test_f1_flat": 0.828342820265903,
+      "test_f1_long": 0.07402156852817579,
+      "test_f1_short": 0.059390706739152734,
+      "avg_latency_ms": 0.004521919150172494,
+      "total_prediction_time": 0.5371859073638916,
+      "training_time": 8.521747350692749,
+      "val_f1_macro": 0.33702401347609895
+    },
+    "logistic": {
+      "model_name": "logistic",
+      "model_type": "logistic",
+      "test_accuracy": 0.7074396444324724,
+      "test_f1_macro": 0.4415021545666025,
+      "test_f1_weighted": 0.6634732717928736,
+      "test_f1_flat": 0.8496049027971087,
+      "test_f1_long": 0.38235979192008074,
+      "test_f1_short": 0.09254176898261833,
+      "avg_latency_ms": 0.00043008105835692565,
+      "total_prediction_time": 0.051091909408569336,
+      "training_time": 10.698726415634155,
+      "val_f1_macro": 0.4174840784542356
+    }
+  },
+  "winner": {
+    "model": "logistic",
+    "f1_score": 0.4415021545666025,
+    "accuracy": 0.7074396444324724,
+    "latency": 0.00043008105835692565,
+    "training_time": 10.698726415634155,
+    "reason": "Best F1 score with acceptable latency"
+  }
+}

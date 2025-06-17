@@ -1,0 +1,31 @@
+# Core ML Stack
+lightgbm>=3.3.0
+torch>=1.12.0
+optuna>=3.0.0
+scikit-learn>=1.1.0
+onnxruntime>=1.12.0
+
+# Data Processing
+pandas>=1.4.0
+numpy>=1.21.0
+pyarrow>=8.0.0
+TA-Lib>=0.4.0
+
+# Communication
+websockets>=10.0
+aiohttp>=3.8.0
+
+# Development & Testing
+pytest>=7.0.0
+jupyter>=1.0.0
+matplotlib>=3.5.0
+plotly>=5.0.0
+seaborn>=0.11.0
+
+# Progress tracking
+rich>=12.0.0
+tqdm>=4.64.0
+
+# Configuration and utilities
+pyyaml>=6.0
+python-dotenv>=0.19.0 
