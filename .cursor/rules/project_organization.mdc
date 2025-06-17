@@ -1,5 +1,201 @@
 ---
-description:
-globs:
-alwaysApply: false
+description: 
+globs: 
+alwaysApply: true
 ---
+# Project Organization Rule: NinjaTrader 8 ML Strategy
+
+## Core Principle
+Maintain a production-ready, scalable, and self-documenting project structure that facilitates rapid development and deployment.
+
+## Directory Structure Standards
+
+### Root Level - Clean & Purposeful
+```
+Thelma/
+├── config/           # All configuration files
+├── docs/            # All documentation  
+├── scripts/         # All automation scripts
+├── src/             # Production source code only
+├── data/            # Data management with clear hierarchy
+├── models/          # Semantic versioned model artifacts
+├── python-client/   # WebSocket client infrastructure
+├── NT8/             # NinjaTrader integration
+├── reports/         # Analysis and comparison results
+└── memory-bank/     # Project context and progress tracking
+```
+
+### Configuration Management
+**Location**: `config/`
+- `requirements.txt` - Unified dependency management
+- `environment.yml` - Conda environment specification
+- `deployment.yaml` - Production deployment settings
+- NO duplicate config files across directories
+
+### Documentation Standards  
+**Location**: `docs/`
+- `30_day_mvp_plan.md` - Project roadmap
+- `setup_guide.md` - Installation and configuration
+- `api_reference.md` - Code documentation
+- `architecture.md` - System design decisions
+- ALL markdown files with consistent naming (snake_case)
+
+### Script Organization
+**Location**: `scripts/`
+```
+scripts/
+├── deploy/          # Deployment automation
+├── maintenance/     # Cleanup and optimization
+├── training/        # Model training pipelines
+└── validation/      # Testing and validation
+```
+
+### Data Hierarchy - Single Source of Truth
+**Location**: `data/`
+```
+data/
+├── raw/             # Original, immutable datasets
+│   └── es_1m/       # ES futures 1-minute data
+├── processed/       # ML-ready feature datasets (current version only)
+└── archive/         # Historical processed versions
+```
+
+**Rules**:
+- NO data duplication across directories
+- Use symlinks for shared data access
+- Keep only current processed version + archive
+- Raw data is immutable and versioned
+
+### Model Management - Semantic Versioning
+**Location**: `models/`
+```
+models/
+├── production/
+│   ├── current -> v1.2.0/    # Symlink to active version
+│   ├── v1.2.0/               # Semantic versioning
+│   │   ├── model.pkl         # Clean naming
+│   │   ├── metadata.json     # Performance metrics
+│   │   └── config.yaml       # Training configuration
+│   └── v1.1.0/               # Previous version
+├── staging/                  # Candidates for promotion
+└── archive/                  # Long-term storage
+```
+
+**Naming Convention**:
+- Semantic versioning: MAJOR.MINOR.PATCH
+- Clean filenames: `model.pkl`, not `cuda_enhanced_exact_74_model_VISUALIZER_READY.pkl`
+- Metadata-driven: All details in `metadata.json`
+
+### Source Code Standards
+**Location**: `src/`
+```
+src/
+├── data/            # Feature engineering and data processing
+├── models/          # ML model implementations  
+├── bridge/          # Signal bridge services
+└── utils/           # Shared utilities
+```
+
+**Rules**:
+- Production code only (no experiments)
+- Single responsibility per file
+- Clear, descriptive filenames
+- Comprehensive docstrings
+
+## File Management Protocols
+
+### Temporary File Policy
+- NO temporary files in root or src/
+- Use system temp directories for scratch work
+- Clean up immediately after use
+- .gitignore all temp patterns
+
+### Experiment Management
+- Create feature branches for experiments
+- Keep main branch production-ready
+- Delete experimental files before merge
+- Document learnings in memory-bank/
+
+### Backup Strategy
+- Git history for code versioning
+- `models/archive/` for model artifacts
+- `data/archive/` for processed data versions
+- NO duplicate files for "backup"
+
+## Continuous Maintenance
+
+### Weekly Cleanup Checklist
+- [ ] Remove any temp files (`*.tmp`, `*.log`, `*.bak`)
+- [ ] Archive old model versions (keep latest 3)
+- [ ] Update documentation for any changes
+- [ ] Verify no data duplication
+- [ ] Check symlinks are valid
+
+### Monthly Organization Review
+- [ ] Assess directory sizes (`du -sh */`)
+- [ ] Reorganize if any directory >1GB unexpectedly
+- [ ] Review and archive old experiments
+- [ ] Update this rule if structure evolves
+
+### Before Major Changes
+- [ ] Update memory-bank with current state
+- [ ] Document architectural decisions
+- [ ] Ensure clean git status
+- [ ] Backup critical model artifacts
+
+## Violation Response Protocol
+
+**If structure violation detected**:
+1. **STOP** - Do not proceed with current task
+2. **ASSESS** - Identify root cause of violation
+3. **CORRECT** - Apply this rule to fix structure
+4. **DOCUMENT** - Update memory-bank with resolution
+5. **PREVENT** - Add safeguards to prevent recurrence
+
+**Common Violations**:
+- Files in wrong directories → Move to correct location
+- Duplicate files → Establish single source of truth
+- Missing metadata → Create required documentation
+- Inconsistent naming → Standardize immediately
+
+## Integration Points
+
+**Memory Bank Updates**:
+- Always reflect current structure in `activeContext.md`
+- Update `progress.md` when reorganizing
+- Log major changes in `timeline.md`
+
+**CI/CD Compatibility**:
+- Structure supports automated deployment
+- Clear paths for model artifacts
+- Standardized configuration management
+- Predictable file locations
+
+**Team Collaboration**:
+- Self-documenting structure
+- Clear ownership per directory
+- Minimal cognitive load for navigation
+- Consistent patterns across all components
+
+## Success Metrics
+
+**Organization Quality**:
+- Root directory has ≤8 items
+- No duplicate files across project
+- All files in logical locations
+- Clear model versioning trail
+
+**Developer Experience**:
+- <30 seconds to find any file
+- Zero ambiguity about which version to use
+- Self-explanatory directory purposes
+- Minimal maintenance overhead
+
+**Production Readiness**:
+- Automated deployment compatibility
+- Clear separation of concerns
+- Version-controlled configurations
+- Traceable model lineage
+
+This rule ensures the project remains organized, scalable, and production-ready throughout development and deployment phases.
+
