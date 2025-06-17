@@ -1,0 +1,39 @@
+{
+  "version": "1.2.0",
+  "model_type": "cuda_enhanced_exact_74_features",
+  "created_date": "2025-06-17T10:23:00Z",
+  "performance_metrics": {
+    "f1_score": 0.5601,
+    "f1_score_std": 0.0308,
+    "sharpe_ratio": 4.8440,
+    "sharpe_ratio_std": 2.7217,
+    "win_rate": 0.5088,
+    "win_rate_std": 0.013,
+    "confidence_avg": 0.7615,
+    "trades_per_split": 22400
+  },
+  "targets_comparison": {
+    "f1_target": 0.44,
+    "f1_achievement": "+27% over target",
+    "sharpe_target": 1.20,
+    "sharpe_achievement": "+303% over target"
+  },
+  "model_features": {
+    "feature_count": 74,
+    "feature_engineering": "multi_timeframe_enhanced",
+    "timeframes": ["5min", "15min", "1hour"],
+    "dynamic_thresholds": "volatility_adjusted",
+    "threshold_range": "0.0001-0.0009"
+  },
+  "training_config": {
+    "architecture": "neural_network",
+    "dropout": true,
+    "early_stopping": true,
+    "confidence_filtering": true,
+    "gpu_acceleration": "pytorch_cuda",
+    "validation_method": "walk_forward_3_split"
+  },
+  "deployment_status": "production_ready",
+  "file_size_kb": 265,
+  "inference_latency_ms": "<20"
+} 

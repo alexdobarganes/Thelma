@@ -5,15 +5,15 @@
 **Sprint**: Clean Architecture + Platform Integration Preparation
 **Priority**: Streamlined codebase with proven high-performance model (F1: 0.56, Sharpe: 4.84) ready for Week 3 platform integration
 
-## Project Cleanup & Optimization Complete (2025-06-17 12:36)
-**MAJOR CLEANUP**: Comprehensive file cleanup completed
-- ✅ **Removed 25+ experimental/temporary files**: All failed experiments, debug scripts, obsolete visualizations eliminated
-- ✅ **Streamlined src/models/**: Reduced from 13 to 4 essential files
-- ✅ **Optimized src/data/**: Kept only `feature_engineering_enhanced.py` (working version)
-- ✅ **Cleaned reports/**: Removed 12 experimental report directories, kept core comparisons
-- ✅ **Preserved working model**: `cuda_enhanced_exact_74_model_VISUALIZER_READY.pkl` (265KB final model)
-- ✅ **Maintained backup history**: All model artifacts preserved in `models/backup/` for reference
-- **Impact**: Clean, production-ready codebase with only essential working components
+## Project Optimization Complete (2025-06-17 12:36-13:15)
+**COMPREHENSIVE REORGANIZATION**: Complete project structure optimization implemented
+- ✅ **Data Consolidation**: Single source of truth established (`data/raw/`), eliminated duplication, archived old versions
+- ✅ **Root Directory Restructure**: Clean organization with `config/`, `docs/`, `scripts/` separation
+- ✅ **Semantic Model Versioning**: Production model v1.2.0 with metadata and configuration management
+- ✅ **Organization Rule Created**: `.cursor/rules/project_organization.mdc` for maintaining structure
+- ✅ **File Cleanup**: Removed 25+ experimental files, streamlined architecture
+- ✅ **Configuration Unified**: Single `config/requirements.txt`, eliminated duplicates
+- **Impact**: Production-ready, scalable, self-documenting project structure optimized for Week 3 integration
 
 ## Current Clean Architecture (Post-Cleanup)
 
@@ -31,12 +31,19 @@
 **Infrastructure**:
 - `python-client/websocket_client.py` - Ultra-performance WebSocket client
 - `NT8/TickWebSocketPublisher_Optimized.cs` - Production WebSocket publisher
-- `update_indicator.sh` - Deployment automation
+- `scripts/deploy/update_indicator.sh` - Deployment automation
 
-**Data Assets**:
-- `data/es_1m/market_data.csv` - 2-year ES historical dataset (595,426 records)
-- `data/processed/es_features_enhanced.csv` - ML-ready feature dataset
-- `data/processed/es_features.csv` - Original processed features
+**Data Assets (Optimized Structure)**:
+- `data/raw/es_1m/market_data.csv` - 2-year ES historical dataset (595,426 records) [Single Source of Truth]
+- `data/processed/es_features_enhanced.csv` - Current ML-ready feature dataset
+- `data/archive/` - Historical feature versions (es_features.csv, es_features_winrate_optimized.csv)
+
+**Production Model (Semantic Versioning)**:
+- `models/production/current/` → `v1.2.0/` - Active production symlink
+- `models/production/v1.2.0/model.pkl` - Clean named model artifact (F1: 0.56, Sharpe: 4.84)
+- `models/production/v1.2.0/metadata.json` - Comprehensive performance metrics
+- `models/production/v1.2.0/config.yaml` - Training configuration
+- `models/archive/` - Historical model versions
 
 ## Immediate Next Steps (Today)
 1. ✅ Project cleanup completed - clean production-ready codebase achieved

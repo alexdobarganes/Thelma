@@ -1,0 +1,47 @@
+# Production Model Configuration v1.2.0
+# CUDA Enhanced Exact 74 Features Model
+
+model:
+  name: "cuda_enhanced_exact_74_features"
+  version: "1.2.0"
+  type: "neural_network"
+  
+features:
+  count: 74
+  engineering_pipeline: "feature_engineering_enhanced.py"
+  timeframes:
+    - "5min"
+    - "15min" 
+    - "1hour"
+  
+training:
+  validation_method: "walk_forward_3_split"
+  gpu_acceleration: true
+  framework: "pytorch_cuda"
+  
+  neural_network:
+    dropout: true
+    early_stopping: true
+    confidence_filtering: true
+    
+  targets:
+    dynamic_thresholds: true
+    volatility_adjusted: true
+    threshold_range: "0.0001-0.0009"
+
+performance_targets:
+  f1_score_min: 0.44
+  sharpe_ratio_min: 1.20
+  win_rate_min: 0.45
+  latency_max_ms: 20
+
+deployment:
+  status: "production"
+  inference_framework: "pytorch"
+  gpu_required: false  # CPU fallback available
+  memory_mb: 512
+  
+paths:
+  model_file: "model.pkl"
+  feature_engineering: "../../src/data/feature_engineering_enhanced.py"
+  validation_script: "../../src/models/cuda_enhanced_exact_74_features.py" 
