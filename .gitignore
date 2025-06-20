@@ -78,10 +78,10 @@ logs/debug_*
 *.out
 
 # Data files (large datasets) - pero mantener algunos archivos esenciales
+# Data directories - ignore all data files
 data/
-data/raw/
-data/processed/
-data/archive/
+
+# End of Selection
 
 
 # Model artifacts (binary files) - mantener modelos de producción actuales
