@@ -98,6 +98,116 @@ ES Market Data (1:30-3 PM ET) → Pattern Detection → Signal Generation → Au
 - ✅ **Signal Generation**: Real-time pattern detection operational
 - ✅ **NinjaTrader Integration**: AutoTrader processing signals with PlaybackMode
 
+### Enhanced Bidirectional System (NEW - 2025-06-20 10:15) ✅
+- **Bidirectional Detection**: Can generate both BUY and SELL signals
+- **Downward V-Reversal**: Price drops → recovers → BUY signal (original proven pattern)
+- **Upward V-Reversal**: Price rises → declines → SELL signal (new inverse pattern)
+- **Flexible Configuration**: Can enable/disable BUY or SELL signals independently
+- **Enhanced AutoTrader**: EnhancedVReversalAutoTrader.cs handles both signal types
+- **Improved Logging**: Separate tracking for BUY vs SELL performance
+- **Validated Parameters**: Same proven risk management as $2300/day model
+
+## System Architecture (Both Systems)
+
+### Original V-Reversal System (BUY Only)
+```
+📊 Data: NinjaTrader → WebSocket → Python Detector
+📈 Pattern: Downward V-Reversal (drops then recovers)
+📁 Signals: signals/ → vreversal_*.txt
+🤖 Trading: VReversalAutoTrader.cs
+```
+
+### Enhanced Bidirectional System (BUY + SELL)
+```
+📊 Data: NinjaTrader → WebSocket → Enhanced Python Detector
+📈 Pattern: Downward V-Reversal → BUY signals
+📉 Pattern: Upward V-Reversal → SELL signals  
+📁 Signals: signals/enhanced/ → enhanced_vreversal_*.txt
+🤖 Trading: EnhancedVReversalAutoTrader.cs
+```
+
+## File Structure (Enhanced System)
+
+### New Files Created ✅
+```
+src/models/enhanced_vreversal/
+├── __init__.py                           # Module initialization
+├── bidirectional_vreversal_detector.py  # Core bidirectional detector
+
+scripts/
+├── launch_enhanced_vreversal_system.py  # Enhanced launcher
+├── quick_enhanced_demo.py               # Demo script
+
+NT8/
+├── EnhancedVReversalAutoTrader.cs       # Enhanced strategy
+
+docs/
+├── enhanced_vreversal_guide.md          # Complete guide
+
+signals/enhanced/                         # Enhanced signal folder
+```
+
+## Production Performance Metrics
+
+### Original System ($2300/Day Model)
+- **Pattern**: Downward V-Reversal (BUY only)
+- **Win Rate**: 98.2% (validated)
+- **Average Daily P&L**: $2,370
+- **Risk**: 0.1% stop loss
+- **Reward**: 3 point take profit
+- **Max Hold**: 25 minutes
+
+### Enhanced System (Estimated)
+- **Patterns**: Bidirectional (BUY + SELL)
+- **Expected Signals**: Up to 2x original (if both directions enabled)
+- **Risk Management**: Same proven parameters
+- **Flexibility**: Can run BUY-only, SELL-only, or both
+- **Max Daily Signals**: 40 (doubled from 20)
+
+## Usage Options
+
+### 1. Original System (BUY Only)
+```bash
+python scripts/launch_vreversal_system.py
+# Uses VReversalAutoTrader.cs with signals/ folder
+```
+
+### 2. Enhanced System - Both Directions
+```bash
+python scripts/launch_enhanced_vreversal_system.py
+# Uses EnhancedVReversalAutoTrader.cs with signals/enhanced/ folder
+```
+
+### 3. Enhanced System - BUY Only
+```bash
+python scripts/launch_enhanced_vreversal_system.py --buy-only
+```
+
+### 4. Enhanced System - SELL Only
+```bash
+python scripts/launch_enhanced_vreversal_system.py --sell-only
+```
+
+### 5. Custom Thresholds
+```bash
+python scripts/launch_enhanced_vreversal_system.py \
+  --drop-threshold 5.0 --rise-threshold 4.5 --max-daily 60
+```
+
+## Testing and Validation
+
+### Demo System ✅
+- **Quick Demo**: `python scripts/quick_enhanced_demo.py`
+- **Sample Data**: Creates synthetic data with embedded patterns
+- **Pattern Validation**: Tests both BUY and SELL pattern detection
+- **Signal Generation**: Verifies signal file creation
+
+### Integration Points ✅
+- **WebSocket Client**: Compatible with existing python-client/
+- **Signal Processing**: Uses same file-based signal system
+- **NinjaTrader**: Enhanced strategy handles both signal types
+- **Logging**: Comprehensive audit trail for both directions
+
 ## What's Left to Build 🔄
 
 ### Week 1: Data & Model Design (✅ 100% COMPLETE)
@@ -190,3 +300,5 @@ ES Market Data (1:30-3 PM ET) → Pattern Detection → Signal Generation → Au
 - **Full Production**: ✅ READY - $2300/day model validated and operational
 
 **🎉 MILESTONE: Production trading system achieving $2,300/day target with 98.2% win rate - READY FOR LIVE TRADING** 
+
+**Current Achievement**: Enhanced bidirectional V-reversal system fully implemented and ready for validation 
