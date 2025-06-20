@@ -229,4 +229,4 @@ debug_*.json
 diagnostic_*.txt
 test_output_*.csv
 
-archive/
+data/
