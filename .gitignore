@@ -78,14 +78,11 @@ logs/debug_*
 *.out
 
 # Data files (large datasets) - pero mantener algunos archivos esenciales
-data/raw/*.csv
-!data/raw/es_1m/market_data.csv
-data/processed/*.csv
-!data/processed/es_features_enhanced.csv
-data/archive/*.csv
-data/realtime_*.csv
-data/diagnostic_*.csv
-data/advanced_*.csv
+data/
+data/raw/
+data/processed/
+data/archive/
+
 
 # Model artifacts (binary files) - mantener modelos de producción actuales
 *.pkl
@@ -229,4 +226,4 @@ debug_*.json
 diagnostic_*.txt
 test_output_*.csv
 
-data/
+
