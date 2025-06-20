@@ -237,7 +237,7 @@ namespace NinjaTrader.NinjaScript.Indicators
             {
                 Description = @"TBOT Optimized WebSocket Publisher - High Performance Tick Streaming";
                 Name = "TBOTTickWebSocketPublisherOptimized";
-                Calculate = Calculate.OnEachTick;
+                Calculate = Calculate.OnBarClose;
                 IsOverlay = true;
                 IsSuspendedWhileInactive = false;
                 

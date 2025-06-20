@@ -1,0 +1,50 @@
+{
+  "model_info": {
+    "name": "VReversal_2300_Production",
+    "version": "1.0",
+    "creation_date": "2025-06-19T22:34:40.061436",
+    "description": "Modelo V-reversal que genera $2300/d\u00eda con 98.2% success rate"
+  },
+  "pattern_detection": {
+    "drop_threshold": 4.0,
+    "drop_window": 15,
+    "breakout_window": 30,
+    "pullback_window": 15,
+    "pullback_tolerance": 1.0
+  },
+  "risk_management": {
+    "stop_loss_pct": 0.001,
+    "max_hold_time": 25,
+    "position_size": 3,
+    "risk_reward_ratio": 3.0
+  },
+  "trading_schedule": {
+    "windows": [
+      [
+        3,
+        4
+      ],
+      [
+        9,
+        11
+      ],
+      [
+        13.5,
+        15
+      ]
+    ],
+    "max_daily_signals": 20,
+    "min_confidence": 0.75
+  },
+  "validated_performance": {
+    "total_days_tested": 436,
+    "profitable_days": 428,
+    "success_rate_pct": 98.17,
+    "avg_daily_pnl": 2370.58,
+    "total_pnl": 1033571.76,
+    "avg_trades_per_day": 5.91,
+    "win_rate_pct": 91.8,
+    "monthly_projection": 49782.13,
+    "annual_projection": 597385.51
+  }
+}

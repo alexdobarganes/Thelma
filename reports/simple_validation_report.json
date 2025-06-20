@@ -1,0 +1,15 @@
+{
+  "timestamp": "2025-06-19T21:37:55.260716",
+  "validation_results": {
+    "win_rate": 91.83590576766856,
+    "avg_daily_pnl": 2311.630766978922,
+    "monthly_pnl": 48544.246106557366,
+    "total_patterns": 2462,
+    "target_achieved": true,
+    "optimal_contracts": 2.984905763742552,
+    "quality_score": 9,
+    "quality_percentage": 100.0,
+    "recommendation": "PROCEDER con trading en vivo"
+  },
+  "status": "COMPLETED"
+}

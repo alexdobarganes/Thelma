@@ -1,0 +1,22 @@
+{
+  "period_summary": {
+    "total_days": 436,
+    "total_trades": 2578,
+    "total_pnl": 1033571.76,
+    "avg_daily_pnl": 2370.5774311926607,
+    "avg_daily_trades": 5.912844036697248
+  },
+  "target_performance": {
+    "daily_target": 2300,
+    "days_target_reached": 428,
+    "target_achievement_rate": 98.1651376146789
+  },
+  "projections": {
+    "monthly_pnl": 49782.126055045876,
+    "annual_pnl": 597385.5126605505
+  },
+  "validation": {
+    "expected_daily_pnl": 2311.63,
+    "actual_vs_expected": 2.550037471077138
+  }
+}
