@@ -1,4 +1,230 @@
-data/advanced_results.csv
-data/diagnostic_data.csv
-data/realtime_market_data.csv
-data/realtime_vreversal.csv
+# ========================
+# Python gitignore
+# ========================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ========================
+# Trading System Specific
+# ========================
+
+# Log files - mantener algunos logs importantes para debugging
+*.log
+!logs/vreversal_system.log
+!logs/websocket_client.log
+logs/temp_*
+logs/debug_*
+*.out
+
+# Data files (large datasets) - pero mantener algunos archivos esenciales
+data/raw/*.csv
+!data/raw/es_1m/market_data.csv
+data/processed/*.csv
+!data/processed/es_features_enhanced.csv
+data/archive/*.csv
+data/realtime_*.csv
+data/diagnostic_*.csv
+data/advanced_*.csv
+
+# Model artifacts (binary files) - mantener modelos de producción actuales
+*.pkl
+!models/production/current/*.pkl
+*.joblib
+*.h5
+*.hdf5
+
+# Model training artifacts
+models/archive/
+models/staging/temp_*
+models/training/
+checkpoints/
+
+# Signal processing - mantener logs esenciales
+signals/processed/
+signals/temp_*/
+signals/cache/
+*.signal
+# Ignorar archivos de señales temporales pero mantener logs importantes
+signals/*.txt
+!signals/processed_signals.log
+
+# WebSocket and communication logs
+websocket_*.log
+connection_*.log
+trade_*.log
+completed_trades.log
+processed_signals.log
+
+# ========================
+# NinjaTrader Specific
+# ========================
+
+# NinjaTrader compiled files
+*.dll
+*.pdb
+*.exe
+bin/
+obj/
+
+# ========================
+# System and OS
+# ========================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# ========================
+# Temporary and Cache Files
+# ========================
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Configuration files with secrets
+.env
+.env.local
+.env.production
+config/secrets/
+credentials.json
+api_keys.txt
+
+# ========================
+# Performance and Profiling
+# ========================
+
+# Profiling data
+*.prof
+*.lprof
+*.pstats
+
+# Performance logs
+performance_*.log
+benchmark_*.json
+
+# ========================
+# Documentation Build
+# ========================
+
+# Sphinx documentation
+docs/_build/
+
+# ========================
+# Specific to this project
+# ========================
+
+# Large model files in production (keep only current)
+models/production/v*/
+!models/production/current/
+
+# Archive data (too large for git)
+archive/data/
+archive/models/
+
+# Real-time data streams
+realtime_data/
+live_data/
+
+# Trade execution logs
+trade_logs/
+execution_*.log
+
+# Diagnostic and debug files
+debug_*.json
+diagnostic_*.txt
+test_output_*.csv

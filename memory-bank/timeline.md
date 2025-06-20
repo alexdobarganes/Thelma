@@ -459,4 +459,4 @@
 - Enhanced model baseline reproducibility issues identified
 - Trading windows correction (10:00-11:30, 13:00-15:30) did NOT resolve systematic failure
 - Systemic ~41-42% win rate ceiling across ALL recent model variants
-- Problem confirmed as deeper than hyperparameters or trading windows 
+- Problem confirmed as deeper than hyperparameters or trading windows 2025-06-20T10:51:00Z - .gitignore configurado completamente con patrones específicos para proyecto de trading ML
